@@ -9,7 +9,9 @@ print("model loaded, starting server")
 def translate_c2e(text):
     pending_txt = str(text)
     result = pending
-    pending = model.generate({"input": pending_txt, "prompt": "中翻英", "<ans>": ""}, tokenizer)
+    pending = model.generate({"input": pending_txt, 
+                              "prompt": "中翻英", 
+                              "<ans>": ""}, tokenizer)
     pending['result'] = pending['<ans>']
     result = pending
     print(result)
@@ -18,7 +20,9 @@ def translate_c2e(text):
 def translate_e2c(text):
     pending_txt = str(text)
     result = pending
-    pending = model.generate({"input": pending_txt, "prompt": "英翻中", "<ans>": ""}, tokenizer)
+    pending = model.generate({"input": pending_txt, 
+                              "prompt": "英翻中", 
+                              "<ans>": ""}, tokenizer)
     pending['result'] = pending['<ans>']
     result = pending
     print(result)
@@ -27,19 +31,27 @@ def translate_e2c(text):
 def detect_lang(text):
     pending_txt = str(text)
     result = pending
-    pending = model.generate({"input": pending_txt, "options": {"<option_0>": "英语", "<option_1>": "中文", "<option_2>": "其他语言"},"question": "这段话的语言是：", "<ans>": ""}, tokenizer)
+    pending = model.generate({"input": pending_txt, 
+                              "options": {"<option_0>": "英语", 
+                                          "<option_1>": "中文", 
+                                          "<option_2>": "其他语言"},
+                              "question": "这段话的语言是：",
+                              "<ans>": ""}, tokenizer)
     pending['result'] = pending['<ans>']
     result = pending
     print(result)
     return result
 
 def translate_to(lang, text):
-    if lang in ['en', 'English','english']:
+    if lang in ['en', 'English','english',"英语",]:
         pending = translate_c2e(text)
         return pending
-    if lang in ['ch', 'cn','Chinese','chinese',]:
+    if lang in ['ch', 'cn','Chinese','chinese',"中文",]:
         pending = translate_e2c(text)
         return pending
+    else: 
+        return {'status': 'error',
+                'info': 'unsupported language'}
 
 from flask import Flask, request
 
