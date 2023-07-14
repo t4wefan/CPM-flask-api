@@ -73,6 +73,14 @@ app = Flask(__name__)
 def translate():
     text = request.args.get('text')
     lang = request.args.get('from')
+    result0 = translate_to(lang, text)
+    result = result0['result']
+    return result
+
+@app.route('/translate-full', methods=['GET'])
+def translate():
+    text = request.args.get('text')
+    lang = request.args.get('from')
     result = translate_to(lang, text)
     return result
 
