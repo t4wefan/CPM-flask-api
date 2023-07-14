@@ -2,8 +2,8 @@
 print('starting')
 from transformers import AutoModelForCausalLM, AutoTokenizer
 print('loading model')
-tokenizer = AutoTokenizer.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, from_cache=True)
-model = AutoModelForCausalLM.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, from_cache=True).cuda()  
+tokenizer = AutoTokenizer.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, use_cache=True)
+model = AutoModelForCausalLM.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, use_cache=True).cuda()  
 print("model loaded, starting server")
 
 def translate_c2e(text):
