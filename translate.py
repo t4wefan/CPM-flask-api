@@ -1,7 +1,7 @@
 
 print('starting')
 from transformers import AutoModelForCausalLM, AutoTokenizer
-print('loading and checking model, it may take while')
+print('loading and checking model, this may take a while.')
 tokenizer = AutoTokenizer.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, )
 model = AutoModelForCausalLM.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, ).cuda()  
 print("model loaded, starting server")
@@ -13,7 +13,7 @@ def translate_c2e(text):
     result = pending
     pending = model.generate({"input": pending_txt, 
                               "prompt": "把这段话从中文翻译到英文", 
-                              "<ans>": ""}, tokenizer, max_new_tokens=100)
+                              "<ans>": ""}, tokenizer, max_new_tokens=1500)
     arr = pending[0]
     ans = str(arr['<ans>'])
     pending = arr 
@@ -28,7 +28,7 @@ def translate_e2c(text):
     result = pending
     pending = model.generate({"input": pending_txt, 
                               "prompt": "把这段话从英文翻译到中文", 
-                              "<ans>": ""}, tokenizer, max_new_tokens=100)
+                              "<ans>": ""}, tokenizer, max_new_tokens=1500)
     arr = pending[0]
     ans = str(arr['<ans>'])
     pending = arr
