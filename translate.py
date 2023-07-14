@@ -6,13 +6,14 @@ tokenizer = AutoTokenizer.from_pretrained("openbmb/cpm-bee-10b", trust_remote_co
 model = AutoModelForCausalLM.from_pretrained("openbmb/cpm-bee-10b", trust_remote_code=True, ).cuda()  
 print("model loaded, starting server")
 
+
 def translate_c2e(text):
     pending_txt = str(text)
     pending = None
     result = pending
     pending = model.generate({"input": pending_txt, 
-                              "prompt": "中翻英", 
-                              "<ans>": ""}, tokenizer)
+                              "prompt": "把这段话从中文翻译到英文", 
+                              "<ans>": ""}, tokenizer, max_new_tokens=100)
     arr = pending[0]
     ans = str(arr['<ans>'])
     pending = arr 
@@ -26,8 +27,8 @@ def translate_e2c(text):
     pending = None
     result = pending
     pending = model.generate({"input": pending_txt, 
-                              "prompt": "英翻中", 
-                              "<ans>": ""}, tokenizer)
+                              "prompt": "把这段话从英文翻译到中文", 
+                              "<ans>": ""}, tokenizer, max_new_tokens=100)
     arr = pending[0]
     ans = str(arr['<ans>'])
     pending = arr
@@ -45,7 +46,7 @@ def detect_lang(text):
                                           "<option_1>": "中文", 
                                           "<option_2>": "其他语言"},
                               "question": "这段话的语言是：",
-                              "<ans>": ""}, tokenizer)
+                              "<ans>": ""}, tokenizer, max_new_tokens=100)
     arr = pending[0]
     ans = str(arr['<ans>'])
     pending = arr
