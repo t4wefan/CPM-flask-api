@@ -13,7 +13,8 @@ def translate_c2e(text):
     pending = model.generate({"input": pending_txt, 
                               "prompt": "中翻英", 
                               "<ans>": ""}, tokenizer)
-    pending['result'] = pending['<ans>']
+    ans = str(pending['<ans>'])
+    pending['result'] = ans
     result = pending
     print(result)
     return result
@@ -25,7 +26,8 @@ def translate_e2c(text):
     pending = model.generate({"input": pending_txt, 
                               "prompt": "英翻中", 
                               "<ans>": ""}, tokenizer)
-    pending['result'] = pending['<ans>']
+    ans = str(pending['<ans>'])
+    pending['result'] = ans
     result = pending
     print(result)
     return result
@@ -40,7 +42,8 @@ def detect_lang(text):
                                           "<option_2>": "其他语言"},
                               "question": "这段话的语言是：",
                               "<ans>": ""}, tokenizer)
-    pending['result'] = pending['<ans>']
+    ans = str(pending['<ans>'])
+    pending['result'] = ans
     result = pending
     print(result)
     return result
