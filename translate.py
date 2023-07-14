@@ -85,5 +85,11 @@ def translate_full():
     result = translate_from(lang, text)
     return result
 
+@app.route('/language', methods=['GET'])
+def language():
+    text = request.args.get('text')
+    result = detect_lang(text)
+    return result
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7860)
