@@ -54,12 +54,12 @@ def detect_lang(text):
     print(result)
     return result
 
-def translate_to(lang, text):
+def translate_from(lang, text):
     if lang in ['en', 'English','english',"英语",]:
-        pending = translate_c2e(text)
+        pending = translate_e2c(text)
         return pending
     if lang in ['ch', 'cn','Chinese','chinese',"中文",]:
-        pending = translate_e2c(text)
+        pending = translate_c2e(text)
         return pending
     else: 
         return {'status': 'error',
@@ -73,7 +73,7 @@ app = Flask(__name__)
 def translate():
     text = request.args.get('text')
     lang = request.args.get('from')
-    result0 = translate_to(lang, text)
+    result0 = translate_from(lang, text)
     result = result0['result']
     return result
 
@@ -81,7 +81,7 @@ def translate():
 def translate_full():
     text = request.args.get('text')
     lang = request.args.get('from')
-    result = translate_to(lang, text)
+    result = translate_from(lang, text)
     return result
 
 if __name__ == '__main__':
